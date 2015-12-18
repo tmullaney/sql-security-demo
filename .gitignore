@@ -7,3 +7,4 @@ App_Data
 /packages
 artifacts
 *.nupkg
+.vs

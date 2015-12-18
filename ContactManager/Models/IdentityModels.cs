@@ -23,6 +23,8 @@ namespace ContactManager.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            // Run migrations & seed data if database is new
+            Database.SetInitializer<ApplicationDbContext>(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ContactManager.Migrations.Configuration>());
         }
 
         public static ApplicationDbContext Create()
