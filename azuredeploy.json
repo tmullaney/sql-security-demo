@@ -195,12 +195,12 @@
                     }
                 },
                 {
-                    "apiVersion": "2015-08-01",
+                    "apiVersion": "2015-04-01",
                     "type": "sourcecontrols",
                     "name": "web",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]",
-                        "[concat('Microsoft.Web/Sites', parameters('siteName'), '/config/web')]"
+                        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]",
+                        "[concat('Microsoft.Web/sites', parameters('siteName'), '/config/connectionstrings')]"
                     ],
                     "properties": {
                         "RepoUrl": "[parameters('repoUrl')]",
