@@ -1,2 +1,0 @@
-[config]
-POST_DEPLOYMENT_ACTION=postdeploy.cmd
