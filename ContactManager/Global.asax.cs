@@ -20,11 +20,6 @@ namespace ContactManager
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            // force db initialization on application start
-            // so that post-deploy SQL scripts can finish db setup
-            var ctx = new ApplicationDbContext();
-            ctx.Database.Initialize(true);
         }
     }
 }
