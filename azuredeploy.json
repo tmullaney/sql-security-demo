@@ -123,7 +123,7 @@
         },
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "[concat(uniquestring(resourceGroup().id), 'storage')]",
+            "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "The name of the storage account used to store SQL audit logs."
             }
