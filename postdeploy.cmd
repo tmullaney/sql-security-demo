@@ -12,6 +12,6 @@ sqlcmd -S %_DataSource% -d %_InitialCatalog% -U %APPSETTING_administratorLogin% 
 sqlcmd -S %_DataSource% -d %_InitialCatalog% -U %APPSETTING_administratorLogin% -P %APPSETTING_administratorLoginPassword% -Q "ALTER ROLE db_datawriter ADD MEMBER %APPSETTING_applicationLogin%"
 sqlcmd -S %_DataSource% -d %_InitialCatalog% -U %APPSETTING_administratorLogin% -P %APPSETTING_administratorLoginPassword% -i .\Sql\00-Initial-Migrations.sql
 sqlcmd -S %_DataSource% -d %_InitialCatalog% -U %APPSETTING_administratorLogin% -P %APPSETTING_administratorLoginPassword% -i .\Sql\01-Enable-Row-Level-Security.sql
-sqlcmd -S %_DataSource% -d %_InitialCatalog% -U %APPSETTING_administratorLogin% -P %APPSETTING_administratorLoginPassword% -i .\Sql\01-Enable-Dynamic-Data-Masking.sql
+sqlcmd -S %_DataSource% -d %_InitialCatalog% -U %APPSETTING_administratorLogin% -P %APPSETTING_administratorLoginPassword% -i .\Sql\02-Enable-Dynamic-Data-Masking.sql
 
 ECHO Finished executing postdeploy.cmd
