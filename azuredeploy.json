@@ -16,6 +16,7 @@
         },
         "siteLocation": {
             "type": "string",
+            "defaultValue": "West US",
             "metadata": {
                 "description": "The location to use for creating the web app and hosting plan."
             }
@@ -53,6 +54,7 @@
         },
         "serverLocation": {
             "type": "string",
+            "defaultValue": "West US",
             "metadata": {
                 "description": "The location of the database server. For best performance, this location should be the same as the location of the web app."
             }
@@ -85,6 +87,7 @@
         },
         "databaseName": {
             "type": "string",
+            "defaultValue": "ContactManagerDb",
             "metadata": {
                 "description": "The name of the new database to create."
             }
@@ -217,7 +220,7 @@
                     ],
                     "properties": {
                         "DefaultConnection": {
-                            "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', parameters('serverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('serverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
+                            "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', parameters('serverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('applicationLogin'), '@', parameters('serverName'), ';Password=', parameters('applicationLoginPassword'), ';')]",
                             "type": "SQLAzure"
                         }
                     }
