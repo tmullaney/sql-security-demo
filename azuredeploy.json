@@ -48,6 +48,7 @@
         },
         "serverName": {
             "type": "string",
+            "default": "[concat(uniquestring(resourceGroup().id), 'server')]",
             "metadata": {
                 "description": "The name of the new database server to create."
             }
@@ -168,6 +169,15 @@
                     "type": "firewallrules"
                 }
             ]
+        },
+        {
+            "apiVersion": "2014-06-01",
+            "name": "[parameters('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "accountType": "[parameters('storageAccountType')]"
+            }
         },
         {
             "apiVersion": "2014-06-01",
