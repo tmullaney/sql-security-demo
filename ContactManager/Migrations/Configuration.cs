@@ -14,20 +14,20 @@ namespace ContactManager.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
         
         protected override void Seed(ContactManager.Models.ApplicationDbContext context)
         {
             // Add two sample users (via Identity Framework)
-            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            um.Create(new ApplicationUser() { UserName = "user1@contoso.com" }, "user1password");
-            um.Create(new ApplicationUser() { UserName = "user2@contoso.com" }, "user2password");
+            //var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            //um.Create(new ApplicationUser() { UserName = "user1@contoso.com" }, "user1password");
+            //um.Create(new ApplicationUser() { UserName = "user2@contoso.com" }, "user2password");
 
             // Run included SQL scripts to seed sample data and enable security features
-            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            this.executeSqlFile(context, baseDir + "\\sql\\01-Seed-Contacts.sql");
-            this.executeSqlFile(context, baseDir + "\\sql\\02-Enable-Row-Level-Security.sql");
+            //var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            //this.executeSqlFile(context, baseDir + "\\sql\\01-Seed-Contacts.sql");
+            //this.executeSqlFile(context, baseDir + "\\sql\\02-Enable-Row-Level-Security.sql");
         }
 
         private void executeSqlFile(ContactManager.Models.ApplicationDbContext context, string sqlFile)
