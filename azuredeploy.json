@@ -197,6 +197,20 @@
                 {
                     "apiVersion": "2015-08-01",
                     "type": "config",
+                    "name": "appsettings",
+                    "dependsOn": [
+                        "[concat('Microsoft.Web/sites/', parameters('siteName'))]"
+                    ],
+                    "properties": {
+                        "administratorLogin": "[parameters('administratorLogin')]",
+                        "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+                        "applicationLogin": "[parameters('applicationLogin')]",
+                        "applicationLoginPassword": "[parameters('applicationLoginPassword')]"
+                    }
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "type": "config",
                     "name": "connectionstrings",
                     "dependsOn": [
                         "[concat('Microsoft.Web/sites/', parameters('siteName'))]"
@@ -205,25 +219,7 @@
                         "DefaultConnection": {
                             "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', parameters('serverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('serverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
                             "type": "SQLAzure"
-                        },
-                        "appSettings": [
-                            {
-                                "name": "administratorLogin",
-                                "value": "[parameters('administratorLogin')]"
-                            },
-                            {
-                                "name": "administratorLoginPassword",
-                                "value": "[parameters('administratorLoginPassword')]"
-                            },
-                            {
-                                "name": "applicationLogin",
-                                "value": "[parameters('applicationLogin')]"
-                            },
-                            {
-                                "name": "applicationLoginPassword",
-                                "value": "[parameters('applicationLoginPassword')]"
-                            }
-                        ]
+                        }
                     }
                 },
                 {
