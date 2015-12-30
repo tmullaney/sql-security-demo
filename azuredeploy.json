@@ -48,7 +48,7 @@
         },
         "serverName": {
             "type": "string",
-            "default": "[concat(uniquestring(resourceGroup().id), 'server')]",
+            "default": "[concat(uniquestring(resourceGroup().id), 'sqlserver')]",
             "metadata": {
                 "description": "The name of the new database server to create."
             }
@@ -119,6 +119,26 @@
             "defaultValue": "S0",
             "metadata": {
                 "description": "The name corresponding to the performance level for edition. The available options are: Shared, Basic, S0, S1, S2, S3, P1, P2, and P3."
+            }
+        },
+        "storageAccountName": {
+            "type": "string",
+            "defaultValue": "[concat(uniquestring(resourceGroup().id), 'storage')]",
+            "metadata": {
+                "description": "The name of the storage account used to store SQL audit logs."
+            }
+        },
+        "storageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_ZRS",
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "The storage account type."
             }
         },
         "repoUrl": {
