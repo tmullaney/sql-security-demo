@@ -1,68 +1,7 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "variables": {
-        "defaultServerName": "[concat('server', uniqueString(resourceGroup().id))]"
-    },
     "parameters": {
-        "siteName": {
-            "type": "string",
-            "metadata": {
-                "description": "The name of the web app that you wish to create."
-            }
-        },
-        "hostingPlanName": {
-            "type": "string",
-            "metadata": {
-                "description": "The name of the App Service plan to use for hosting the web app."
-            }
-        },
-        "siteLocation": {
-            "type": "string",
-            "defaultValue": "West US",
-            "metadata": {
-                "description": "The location to use for creating the web app and hosting plan."
-            }
-        },
-        "serverLocation": {
-            "type": "string",
-            "defaultValue": "West US",
-            "metadata": {
-                "description": "The location of the database server. For best performance, this location should be the same as the location of the web app."
-            }
-        },
-        "sku": {
-            "type": "string",
-            "allowedValues": [
-                "Free",
-                "Shared",
-                "Basic",
-                "Standard"
-            ],
-            "defaultValue": "Free",
-            "metadata": {
-                "description": "The pricing tier for the hosting plan."
-            }
-        },
-        "workerSize": {
-            "type": "string",
-            "allowedValues": [
-                "0",
-                "1",
-                "2"
-            ],
-            "defaultValue": "0",
-            "metadata": {
-                "description": "The instance size of the hosting plan (small, medium, or large)."
-            }
-        },
-        "serverName": {
-            "type": "string",
-            "defaultValue": "[variables('defaultServerName')]",
-            "metadata": {
-                "description": "The name of the new database server to create."
-            }
-        },
         "administratorLogin": {
             "type": "string",
             "defaultValue": "sqlAdmin",
@@ -89,60 +28,6 @@
                 "description": "The password to use for the application's connections to the database server."
             }
         },
-        "databaseName": {
-            "type": "string",
-            "defaultValue": "ContactManagerDb",
-            "metadata": {
-                "description": "The name of the new database to create."
-            }
-        },
-        "collation": {
-            "type": "string",
-            "defaultValue": "SQL_Latin1_General_CP1_CI_AS",
-            "metadata": {
-                "description": "The database collation for governing the proper use of characters."
-            }
-        },
-        "edition": {
-            "type": "string",
-            "defaultValue": "Standard",
-            "metadata": {
-                "description": "The type of database to create. The available options are: Web, Business, Basic, Standard, and Premium."
-            }
-        },
-        "maxSizeBytes": {
-            "type": "string",
-            "defaultValue": "1073741824",
-            "metadata": {
-                "description": "The maximum size, in bytes, for the database"
-            }
-        },
-        "requestedServiceObjectiveName": {
-            "type": "string",
-            "defaultValue": "S0",
-            "metadata": {
-                "description": "The name corresponding to the performance level for edition. The available options are: Shared, Basic, S0, S1, S2, S3, P1, P2, and P3."
-            }
-        },
-        "storageAccountName": {
-            "type": "string",
-            "metadata": {
-                "description": "The name of the storage account used to store SQL audit logs."
-            }
-        },
-        "storageAccountType": {
-            "type": "string",
-            "defaultValue": "Standard_LRS",
-            "allowedValues": [
-                "Standard_LRS",
-                "Standard_GRS",
-                "Standard_ZRS",
-                "Premium_LRS"
-            ],
-            "metadata": {
-                "description": "The storage account type."
-            }
-        },
         "repoUrl": {
             "type": "string"
         },
@@ -150,11 +35,27 @@
             "type": "string"
         }
     },
+    "variables": {
+        "defaultSqlServerName": "[concat('cm-sqlserver-', uniqueString(resourceGroup().id))]",
+        "defaultStorageAccountName": "[concat('cm-storage-', uniqueString(resourceGroup().id))]",
+        "defaultWebAppName": "[concat('cm-webapp-', uniqueString(resourceGroup().id))]",
+        "defaultAppServicePlanName": "[concat('cm-appserviceplan-', uniqueString(resourceGroup().id))]",
+        "defaultAppServicePlanSku": "Free",
+        "defaultAppServicePlanWorkerSize": "0",
+        "defaultWebAppLocation": "West US",
+        "defaultSqlServerLocation": "West US",
+        "defaultDatabaseName": "ContactManagerDb",
+        "defaultDatabaseCollation": "SQL_Latin1_General_CP1_CI_AS",
+        "defaultDatabaseEdition": "Basic",
+        "defaultDatabaseSLO": "B",
+        "defaultDatabaseMaxSizeBytes": "1073741824",
+        "defaultStorageAccountType": "Standard_LRS"
+    },
     "resources": [
         {
-            "name": "[parameters('serverName')]",
+            "name": "[variables('defaultSqlServerName')]",
             "type": "Microsoft.Sql/servers",
-            "location": "[parameters('serverLocation')]",
+            "location": "[variables('defaultSqlServerLocation')]",
             "apiVersion": "2014-04-01-preview",
             "properties": {
                 "administratorLogin": "[parameters('administratorLogin')]",
@@ -163,26 +64,26 @@
             },
             "resources": [
                 {
-                    "name": "[parameters('databaseName')]",
+                    "name": "[variables('defaultDatabaseName')]",
                     "type": "databases",
-                    "location": "[parameters('serverLocation')]",
+                    "location": "[variables('defaultSqlServerLocation')]",
                     "apiVersion": "2014-04-01-preview",
                     "dependsOn": [
-                        "[concat('Microsoft.Sql/servers/', parameters('serverName'))]"
+                        "[concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'))]"
                     ],
                     "properties": {
-                        "edition": "[parameters('edition')]",
-                        "collation": "[parameters('collation')]",
-                        "maxSizeBytes": "[parameters('maxSizeBytes')]",
-                        "requestedServiceObjectiveName": "[parameters('requestedServiceObjectiveName')]"
+                        "edition": "[variables('defaultDatabaseEdition')]",
+                        "collation": "[variables('defaultDatabaseCollation')]",
+                        "maxSizeBytes": "[variables('defaultDatabaseMaxSizeBytes')]",
+                        "requestedServiceObjectiveName": "[variables('defaultDatabaseSLO')]"
                     }
                 },
                 {
                     "apiVersion": "2014-04-01-preview",
                     "dependsOn": [
-                        "[concat('Microsoft.Sql/servers/', parameters('serverName'))]"
+                        "[concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'))]"
                     ],
-                    "location": "[parameters('serverLocation')]",
+                    "location": "[variables('defaultSqlServerLocation')]",
                     "name": "AllowAllAzureIps",
                     "properties": {
                         "endIpAddress": "0.0.0.0",
@@ -194,39 +95,39 @@
         },
         {
             "apiVersion": "2015-06-15",
-            "name": "[parameters('storageAccountName')]",
+            "name": "[variables('defaultStorageAccountName')]",
             "type": "Microsoft.Storage/storageAccounts",
             "location": "[resourceGroup().location]",
             "properties": {
-                "accountType": "[parameters('storageAccountType')]"
+                "accountType": "[variables('defaultStorageAccountType')]"
             }
         },
         {
             "apiVersion": "2014-06-01",
-            "name": "[parameters('hostingPlanName')]",
+            "name": "[parameters('defaultAppServicePlanName')]",
             "type": "Microsoft.Web/serverfarms",
-            "location": "[parameters('siteLocation')]",
+            "location": "[variables('defaultWebAppLocation')]",
             "properties": {
-                "name": "[parameters('hostingPlanName')]",
-                "sku": "[parameters('sku')]",
-                "workerSize": "[parameters('workerSize')]",
+                "name": "[parameters('defaultAppServicePlanName')]",
+                "sku": "[variables('defaultAppServicePlanSku')]",
+                "workerSize": "[variables('defaultAppServicePlanWorkerSize')]",
                 "numberOfWorkers": 1
             }
         },
         {
             "apiVersion": "2015-08-01",
-            "name": "[parameters('siteName')]",
+            "name": "[variables('defaultWebAppName')]",
             "type": "Microsoft.Web/sites",
-            "location": "[parameters('siteLocation')]",
+            "location": "[variables('defaultWebAppLocation')]",
             "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+                "[concat('Microsoft.Web/serverfarms/', parameters('defaultAppServicePlanName'))]"
             ],
             "tags": {
-                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('defaultAppServicePlanName'))]": "empty"
             },
             "properties": {
-                "name": "[parameters('siteName')]",
-                "serverFarmId": "[parameters('hostingPlanName')]"
+                "name": "[variables('defaultWebAppName')]",
+                "serverFarmId": "[parameters('defaultAppServicePlanName')]"
             },
             "resources": [
                 {
@@ -234,7 +135,7 @@
                     "type": "config",
                     "name": "appsettings",
                     "dependsOn": [
-                        "[concat('Microsoft.Web/sites/', parameters('siteName'))]"
+                        "[concat('Microsoft.Web/sites/', variables('defaultWebAppName'))]"
                     ],
                     "properties": {
                         "administratorLogin": "[parameters('administratorLogin')]",
@@ -248,11 +149,11 @@
                     "type": "config",
                     "name": "connectionstrings",
                     "dependsOn": [
-                        "[concat('Microsoft.Web/sites/', parameters('siteName'))]"
+                        "[concat('Microsoft.Web/sites/', variables('defaultWebAppName'))]"
                     ],
                     "properties": {
                         "DefaultConnection": {
-                            "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', parameters('serverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('applicationLogin'), '@', parameters('serverName'), ';Password=', parameters('applicationLoginPassword'), ';')]",
+                            "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('defaultDatabaseName'), ';User Id=', parameters('applicationLogin'), '@', variables('defaultSqlServerName'), ';Password=', parameters('applicationLoginPassword'), ';')]",
                             "type": "SQLAzure"
                         }
                     }
@@ -262,8 +163,8 @@
                     "name": "web",
                     "type": "sourcecontrols",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]",
-                        "[concat('Microsoft.Web/sites/', parameters('siteName'), '/config/connectionstrings')]"
+                        "[resourceId('Microsoft.Web/sites', variables('defaultWebAppName'))]",
+                        "[concat('Microsoft.Web/sites/', variables('defaultWebAppName'), '/config/connectionstrings')]"
                     ],
                     "properties": {
                         "RepoUrl": "[parameters('repoUrl')]",
