@@ -36,18 +36,18 @@
         }
     },
     "variables": {
-        "defaultSqlServerName": "[concat('cm-sqlserver-', uniqueString(resourceGroup().id))]",
+        "defaultSqlServerName": "[concat('cmsqlserver', uniqueString(resourceGroup().id))]",
         "defaultSqlServerLocation": "West US",
         "defaultSqlDatabaseName": "ContactManagerDb",
         "defaultSqlDatabaseCollation": "SQL_Latin1_General_CP1_CI_AS",
         "defaultSqlDatabaseEdition": "Basic",
-        "defaultSqlDatabaseSLO": "B",
+        "defaultSqlDatabaseSLO": "Basic",
         "defaultSqlDatabaseMaxSizeBytes": "1073741824",
-        "defaultStorageAccountName": "[concat('cm-storage-', uniqueString(resourceGroup().id))]",
+        "defaultStorageAccountName": "[concat('cmstorage', uniqueString(resourceGroup().id))]",
         "defaultStorageAccountType": "Standard_LRS",
-        "defaultWebAppName": "[concat('cm-webapp-', uniqueString(resourceGroup().id))]",
+        "defaultWebAppName": "[concat('cmwebapp', uniqueString(resourceGroup().id))]",
         "defaultWebAppLocation": "West US",
-        "defaultAppServicePlanName": "[concat('cm-appserviceplan-', uniqueString(resourceGroup().id))]",
+        "defaultAppServicePlanName": "[concat('cmappplan', uniqueString(resourceGroup().id))]",
         "defaultAppServicePlanSku": "Free",
         "defaultAppServicePlanWorkerSize": "0"
     },
