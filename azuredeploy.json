@@ -185,29 +185,6 @@
                         "startIpAddress": "0.0.0.0"
                     },
                     "type": "firewallrules"
-                },
-                {
-                    "apiVersion": "2014-04-01-preview",
-                    "dependsOn": [
-                        "[concat('Microsoft.Sql/servers/', parameters('serverName'), ',', 'Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
-                    ],
-                    "location": "[parameters('serverLocation')]",
-                    "name": "Default",
-                    "properties": {
-                        "auditingState": "Enabled",
-                        "eventTypesToAudit": "PlainSQL_Success,ParameterizedSQL_Success,StoredProcedure_Success,Login_Success,TransactionManagement_Success,PlainSQL_Failure,ParameterizedSQL_Failure,StoredProcedure_Failure,Login_Failure,TransactionManagement_Failure",
-                        "fullAuditLogsTableName": "[concat(parameters('serverName'), 'AuditLog']",
-                        "retentionDays": "14",
-                        "storageAccountName": "[parameters('storageAccountName')]",  
-                        "storageAccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2014-04-01-preview').key1]",  
-                        "secondaryStorageAccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2014-04-01-preview').key2]",  
-                        "storageTableEndpoint": "core.windows.net",  
-                        "storageAccountResourceGroupName": "[resourceGroup().name]",  
-                        "storageAccountSubscriptionId": "[subscription().subscriptionId]" , 
-                        "storageAccountType": "V2", 
-                        "useServerDefault": "Enabled"
-                    },
-                    "type": "auditingpolicies"
                 }
             ]
         },
