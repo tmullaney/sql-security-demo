@@ -37,19 +37,19 @@
     },
     "variables": {
         "defaultSqlServerName": "[concat('cm-sqlserver-', uniqueString(resourceGroup().id))]",
+        "defaultSqlServerLocation": "West US",
+        "defaultSqlDatabaseName": "ContactManagerDb",
+        "defaultSqlDatabaseCollation": "SQL_Latin1_General_CP1_CI_AS",
+        "defaultSqlDatabaseEdition": "Basic",
+        "defaultSqlDatabaseSLO": "B",
+        "defaultSqlDatabaseMaxSizeBytes": "1073741824",
         "defaultStorageAccountName": "[concat('cm-storage-', uniqueString(resourceGroup().id))]",
+        "defaultStorageAccountType": "Standard_LRS",
         "defaultWebAppName": "[concat('cm-webapp-', uniqueString(resourceGroup().id))]",
+        "defaultWebAppLocation": "West US",
         "defaultAppServicePlanName": "[concat('cm-appserviceplan-', uniqueString(resourceGroup().id))]",
         "defaultAppServicePlanSku": "Free",
-        "defaultAppServicePlanWorkerSize": "0",
-        "defaultWebAppLocation": "West US",
-        "defaultSqlServerLocation": "West US",
-        "defaultDatabaseName": "ContactManagerDb",
-        "defaultDatabaseCollation": "SQL_Latin1_General_CP1_CI_AS",
-        "defaultDatabaseEdition": "Basic",
-        "defaultDatabaseSLO": "B",
-        "defaultDatabaseMaxSizeBytes": "1073741824",
-        "defaultStorageAccountType": "Standard_LRS"
+        "defaultAppServicePlanWorkerSize": "0"
     },
     "resources": [
         {
@@ -64,7 +64,7 @@
             },
             "resources": [
                 {
-                    "name": "[variables('defaultDatabaseName')]",
+                    "name": "[variables('defaultSqlDatabaseName')]",
                     "type": "databases",
                     "location": "[variables('defaultSqlServerLocation')]",
                     "apiVersion": "2014-04-01-preview",
@@ -72,10 +72,10 @@
                         "[concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'))]"
                     ],
                     "properties": {
-                        "edition": "[variables('defaultDatabaseEdition')]",
-                        "collation": "[variables('defaultDatabaseCollation')]",
-                        "maxSizeBytes": "[variables('defaultDatabaseMaxSizeBytes')]",
-                        "requestedServiceObjectiveName": "[variables('defaultDatabaseSLO')]"
+                        "edition": "[variables('defaultSqlDatabaseEdition')]",
+                        "collation": "[variables('defaultSqlDatabaseCollation')]",
+                        "maxSizeBytes": "[variables('defaultSqlDatabaseMaxSizeBytes')]",
+                        "requestedServiceObjectiveName": "[variables('defaultSqlDatabaseSLO')]"
                     }
                 },
                 {
@@ -104,11 +104,11 @@
         },
         {
             "apiVersion": "2014-06-01",
-            "name": "[parameters('defaultAppServicePlanName')]",
+            "name": "[variables('defaultAppServicePlanName')]",
             "type": "Microsoft.Web/serverfarms",
             "location": "[variables('defaultWebAppLocation')]",
             "properties": {
-                "name": "[parameters('defaultAppServicePlanName')]",
+                "name": "[variables('defaultAppServicePlanName')]",
                 "sku": "[variables('defaultAppServicePlanSku')]",
                 "workerSize": "[variables('defaultAppServicePlanWorkerSize')]",
                 "numberOfWorkers": 1
@@ -120,14 +120,14 @@
             "type": "Microsoft.Web/sites",
             "location": "[variables('defaultWebAppLocation')]",
             "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', parameters('defaultAppServicePlanName'))]"
+                "[concat('Microsoft.Web/serverfarms/', variables('defaultAppServicePlanName'))]"
             ],
             "tags": {
-                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('defaultAppServicePlanName'))]": "empty"
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', variables('defaultAppServicePlanName'))]": "empty"
             },
             "properties": {
                 "name": "[variables('defaultWebAppName')]",
-                "serverFarmId": "[parameters('defaultAppServicePlanName')]"
+                "serverFarmId": "[variables('defaultAppServicePlanName')]"
             },
             "resources": [
                 {
@@ -153,7 +153,7 @@
                     ],
                     "properties": {
                         "DefaultConnection": {
-                            "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('defaultDatabaseName'), ';User Id=', parameters('applicationLogin'), '@', variables('defaultSqlServerName'), ';Password=', parameters('applicationLoginPassword'), ';')]",
+                            "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('defaultSqlDatabaseName'), ';User Id=', parameters('applicationLogin'), '@', variables('defaultSqlServerName'), ';Password=', parameters('applicationLoginPassword'), ';')]",
                             "type": "SQLAzure"
                         }
                     }
