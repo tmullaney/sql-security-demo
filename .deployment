@@ -1,2 +1,3 @@
 [config]
-POST_DEPLOYMENT_ACTION=postdeploy.cmd
+command = deploy.cmd
+POST_DEPLOYMENT_ACTION = postdeploy.cmd
