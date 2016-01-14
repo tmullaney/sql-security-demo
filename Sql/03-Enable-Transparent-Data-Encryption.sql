@@ -1,2 +1,2 @@
 -- Enable Transparent Data Encryption
-ALTER DATABASE ContactManager SET ENCRYPTION ON
+ALTER DATABASE ContactManagerDb SET ENCRYPTION ON
