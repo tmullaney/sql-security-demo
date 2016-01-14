@@ -4,7 +4,7 @@
     "parameters": {
         "administratorLogin": {
             "type": "string",
-            "defaultValue": "sqlAdmin",
+            "defaultValue": "adminLogin",
             "metadata": {
                 "description": "The account name to use for the database server administrator (high-privileged)."
             }
@@ -17,7 +17,7 @@
         },
         "applicationLogin": {
             "type": "string",
-            "defaultValue": "appUser",
+            "defaultValue": "appLogin",
             "metadata": {
                 "description": "The account name to use for the application's connections to the database server (low-privileged)."
             }

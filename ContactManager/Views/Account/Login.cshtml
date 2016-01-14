@@ -3,15 +3,22 @@
 @{
     ViewBag.Title = "Log in";
 }
+<div style="margin-top: 30px; margin-bottom: 30px; padding: 30px; background-color: #03A9F4; color: white; ">
+    <strong>GETTING STARTED: </strong>This ASP.NET MVC app demos how you can use Azure SQL Database's security features to protect your data. To get started, try logging in as one of the sample users created during deployment:
+    <ul>
+        <li>user1@contoso.com (password: user1password)</li>
+        <li>user2@contoso.com (password: user2password)</li>
+    </ul>
+    For more information, see the Github repo: <a style="color: white; text-decoration: underline;" href="https://github.com/tmullaney/sql-security-demo">https://github.com/tmullaney/sql-security-demo</a>
+</div>
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -51,11 +58,12 @@
             }
         </section>
     </div>
-    <div class="col-md-4">
+    @* This demo does not use external logins
+        <div class="col-md-4">
         <section id="socialLoginForm">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
-    </div>
+    </div>*@
 </div>
 
 @section Scripts {
