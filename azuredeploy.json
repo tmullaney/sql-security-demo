@@ -28,6 +28,19 @@
                 "description": "The password to use for the application's connections to the database server."
             }
         },
+        "location": {
+            "type": "string",
+            "allowedValues": [
+                "West US",
+                "East US",
+                "Central US",
+                "North Europe"
+            ],
+            "defaultValue": "West US",
+            "metadata": {
+                "description": "The Azure region in which these resources will be deployed."
+            }
+        },
         "repoUrl": {
             "type": "string"
         },
