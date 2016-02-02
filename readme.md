@@ -1,8 +1,8 @@
-# Azure SQL Database Security Demo - ContactManager Web App
+# Azure SQL Database Security Demo - Row-Level Security and Dynamic Data Masking
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
-Click to deploy a live web app on Azure that shows how you can use SQL Database's new security features to protect your data. This demo is a simple contact manager application built using the ASP.NET MVC framework.
+Click to deploy a live web app on Azure that shows how you can use some of SQL Database's new security features to protect your data. This demo is a simple contact manager application built using the ASP.NET MVC framework.
 
 ### To run the demo:
 1. Click 'Deploy to Azure' (sign in with your Azure account if necessary)
