@@ -17,22 +17,11 @@ namespace ContactManager.Models
     {
         public void Opened(DbConnection connection, DbConnectionInterceptionContext interceptionContext)
         {
-            //System.Diagnostics.Debug.WriteLine(String.Format("Opened. State: {0}", connection.State.ToString())); // todo: remove diagnostics printing when done debugging
             try
             {
                 var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 if (userId != null)
                 {
-                    //DbCommand getContext = connection.CreateCommand();
-                    //getContext.CommandText = "SELECT SESSION_CONTEXT(N'UserId')";
-                    //using (DbDataReader reader = getContext.ExecuteReader())
-                    //{
-                    //    while (reader.Read())
-                    //    {
-                    //        System.Diagnostics.Debug.WriteLine(String.Format("SESSION_CONTEXT: {0}", reader[0]));
-                    //    }
-                    //}
-
                     DbCommand cmd = connection.CreateCommand();
                     DbParameter param = cmd.CreateParameter();
                     param.ParameterName = "@UserId";
@@ -40,7 +29,6 @@ namespace ContactManager.Models
                     cmd.CommandText = "execute sp_set_session_context @key=N'UserId', @value=@UserId"; // todo: make read_only when sp_reset_connection bug is fixed
                     cmd.Parameters.Add(param);
                     cmd.ExecuteNonQuery();
-                    //System.Diagnostics.Debug.WriteLine(String.Format("Set context: {0} (param: {1})", cmd.CommandText, param.Value.ToString()));
                 }
             }
             catch (System.NullReferenceException)
@@ -62,13 +50,11 @@ namespace ContactManager.Models
         public void Closed(DbConnection connection, DbConnectionInterceptionContext interceptionContext)
         {
             // No operation
-            //System.Diagnostics.Debug.WriteLine(String.Format("Closed. State: {0}", connection.State.ToString()));
         }
 
         public void Closing(DbConnection connection, DbConnectionInterceptionContext interceptionContext)
         {
             // No operation
-            //System.Diagnostics.Debug.WriteLine(String.Format("Closing. State: {0}", connection.State.ToString()));
         }
 
         public void ConnectionStringGetting(DbConnection connection, DbConnectionInterceptionContext<string> interceptionContext)
@@ -124,13 +110,11 @@ namespace ContactManager.Models
         public void Disposed(DbConnection connection, DbConnectionInterceptionContext interceptionContext)
         {
             // No operation
-            //System.Diagnostics.Debug.WriteLine("Disposed");
         }
 
         public void Disposing(DbConnection connection, DbConnectionInterceptionContext interceptionContext)
         {
             // No operation
-            //System.Diagnostics.Debug.WriteLine("Disposing");
         }
 
         public void EnlistedTransaction(DbConnection connection, EnlistTransactionInterceptionContext interceptionContext)
@@ -146,7 +130,6 @@ namespace ContactManager.Models
         public void Opening(DbConnection connection, DbConnectionInterceptionContext interceptionContext)
         {
             // No operation
-            //System.Diagnostics.Debug.WriteLine(String.Format("Opening. State: {0}", connection.State.ToString()));
         }
 
         public void ServerVersionGetting(DbConnection connection, DbConnectionInterceptionContext<string> interceptionContext)
