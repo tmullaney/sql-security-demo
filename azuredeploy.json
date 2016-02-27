@@ -175,7 +175,9 @@
                     "type": "sourcecontrols",
                     "dependsOn": [
                         "[resourceId('Microsoft.Web/sites', variables('defaultWebAppName'))]",
-                        "[concat('Microsoft.Web/sites/', variables('defaultWebAppName'), '/config/connectionstrings')]"
+                        "[concat('Microsoft.Web/sites/', variables('defaultWebAppName'), '/config/connectionstrings')]",
+                        "[concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'))]",
+                        "[concat('Microsoft.Sql/servers/', variables('defaultSqlServerName'), '/databases/', variables('defaultSqlDatabaseName'))]"
                     ],
                     "properties": {
                         "RepoUrl": "[parameters('repoUrl')]",
