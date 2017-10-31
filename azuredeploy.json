@@ -24,19 +24,40 @@
         },
         "applicationLoginPassword": {
             "type": "securestring",
-            "metadata": {
-                "description": "The password to use for the application's connections to the database server."
+            "metadata" : {
+            	"description" : "The password to use for the application's connections to the database server."
             }
-        },
-        "location": {
-            "type": "string",
-            "allowedValues": [
-                "West US",
-				"West US 2",
-                "East US",
-                "Central US",
-                "North Europe"
-            ],
+            },
+            "location" : {
+            	"type" : "string",
+            	"allowedValues" : [
+            		"East US",
+            		"East US 2",
+            		"West US",
+            		"West US 2",
+            		"Central US",
+            		"North Central US",
+            		"South Central US",
+            		"West Central US",
+            		"North Europe",
+            		"West Europe",
+            		"Japan West",
+            		"Japan East",
+            		"East Asia",
+            		"Southeast Asia",
+            		"Brazil South",
+            		"Australia East",
+            		"Australia Southeast",
+            		"South India",
+            		"Central India",
+            		"West India",
+            		"Canada Central",
+            		"Canada East",
+            		"UK South",
+            		"UK West",
+            		"Korea Central",
+            		"Korea South"
+            	],
             "defaultValue": "West US",
             "metadata": {
                 "description": "The Azure region in which these resources will be deployed."
