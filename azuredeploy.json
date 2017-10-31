@@ -32,6 +32,7 @@
             "type": "string",
             "allowedValues": [
                 "West US",
+				"West US 2",
                 "East US",
                 "Central US",
                 "North Europe"
